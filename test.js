@@ -50,4 +50,24 @@ test("serialize string", () => {
   equal(fn.bytecode, '("test1") && ("test2")');
 });
 
+test("serialize null", () => {
+  const fn = compile({ and: [true, null] });
+  equal(fn.bytecode, "(true) && (null)");
+});
+
+test("serialize undefined", () => {
+  const fn = compile({ and: [true, void 0] });
+  equal(fn.bytecode, "(true) && (undefined)");
+});
+
+test("serialize number", () => {
+  const fn = compile({ ">": [3, 1] });
+  equal(fn.bytecode, "(3) > (1)");
+});
+
+test("serialize boolean", () => {
+  const fn = compile({ and: [true, false] });
+  equal(fn.bytecode, "(true) && (false)");
+});
+
 test.run();

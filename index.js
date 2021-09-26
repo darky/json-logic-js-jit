@@ -16,7 +16,7 @@ export const compile = (rule) => {
             .map(
               (idx) =>
                 `(${
-                  isObjectOrNil(val[idx])
+                  isObject(val[idx])
                     ? `__${++nextStep}__`
                     : JSON.stringify(val[idx])
                 })`
@@ -36,8 +36,8 @@ export const compile = (rule) => {
   return fn;
 };
 
-const isObjectOrNil = (value) => {
-  return value == null || typeof value === "object";
+const isObject = (value) => {
+  return value != null && typeof value === "object";
 };
 
 const operatorMap = {
