@@ -2,6 +2,17 @@
   "name": "json-logic-js-jit",
   "version": "0.3.0",
   "description": "Build complex rules, serialize them as JSON, and execute them in JavaScript",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:darky/json-logic-js-jit.git"
+  },
+  "keywords": [
+    "jsonlogic",
+    "json",
+    "rule",
+    "logic",
+    "jit"
+  ],
   "main": "index.js",
   "types": "index.d.ts",
   "files": [
