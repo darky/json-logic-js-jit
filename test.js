@@ -1,7 +1,7 @@
 import { test } from "uvu";
 import { equal } from "uvu/assert";
 
-import { compile } from "./index.js";
+import { addOperation, compile } from "./index.js";
 
 test("and", () => {
   const fn = compile({ and: [true, false] });
@@ -138,6 +138,30 @@ test("serialize number", () => {
 test("serialize boolean", () => {
   const fn = compile({ and: [true, false] });
   equal(fn.bytecode, "(true) && (false)");
+});
+
+test("user operation", () => {
+  addOperation("plus", (a, b) => a + b);
+  const fn = compile({ plus: [1, { "+": [1, 2] }] });
+  equal(fn.bytecode, 'userOperations["plus"]((1), ((1) + (2)), data)');
+});
+
+test("user operation runtime", () => {
+  addOperation("plus", (a, b) => a + b);
+  const fn = compile({ plus: [1, 2] });
+  equal(fn(), 3);
+});
+
+test("pass data runtime", () => {
+  addOperation("inc", (data) => data + 1);
+  const fn = compile({ inc: [] });
+  equal(fn(1), 2);
+});
+
+test("var operator example", () => {
+  addOperation("var", (key, data) => data[key]);
+  const fn = compile({ var: ["fruit"] });
+  equal(fn({ fruit: "apple" }), "apple");
 });
 
 test.run();
