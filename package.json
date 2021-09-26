@@ -1,0 +1,21 @@
+{
+  "name": "json-logic-js-jit",
+  "version": "0.1.0",
+  "description": "Build complex rules, serialize them as JSON, and execute them in JavaScript",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "type": "module",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "map-obj": "4.3.0"
+  },
+  "devDependencies": {
+    "uvu": "0.5.1"
+  },
+  "author": "Vladislav Botvin",
+  "license": "MIT"
+}
