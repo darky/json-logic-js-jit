@@ -29,6 +29,10 @@ export const compile = (rule) => {
                 .concat("data")
                 .join(", ")})`
         );
+      } else {
+        throw new Error(
+          `Operator "${op}" is unknown. Use built-in operators or add own`
+        );
       }
 
       step += 1;

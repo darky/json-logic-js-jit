@@ -1,5 +1,5 @@
 import { test } from "uvu";
-import { equal } from "uvu/assert";
+import { equal, throws } from "uvu/assert";
 
 import { addOperation, compile } from "./index.js";
 
@@ -162,6 +162,10 @@ test("var operator example", () => {
   addOperation("var", (key, data) => data[key]);
   const fn = compile({ var: ["fruit"] });
   equal(fn({ fruit: "apple" }), "apple");
+});
+
+test("unknown operator", () => {
+  throws(() => compile({ unknown: [1, 2] }));
 });
 
 test.run();
