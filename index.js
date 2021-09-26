@@ -15,7 +15,11 @@ export const compile = (rule) => {
           [...Array(arity).keys()]
             .map(
               (idx) =>
-                `(${isObjectOrNil(val[idx]) ? `__${++nextStep}__` : val[idx]})`
+                `(${
+                  isObjectOrNil(val[idx])
+                    ? `__${++nextStep}__`
+                    : JSON.stringify(val[idx])
+                })`
             )
             .join(` ${operatorMap[key]} `)
         );
