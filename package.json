@@ -1,6 +1,6 @@
 {
   "name": "json-logic-js-jit",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Build complex rules, serialize them as JSON, and execute them in JavaScript",
   "main": "index.js",
   "types": "index.d.ts",
