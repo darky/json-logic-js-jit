@@ -3,8 +3,10 @@
   "version": "0.2.0",
   "description": "Build complex rules, serialize them as JSON, and execute them in JavaScript",
   "main": "index.js",
+  "types": "index.d.ts",
   "files": [
-    "index.js"
+    "index.js",
+    "index.d.ts"
   ],
   "type": "module",
   "scripts": {
