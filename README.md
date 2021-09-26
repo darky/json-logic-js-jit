@@ -60,3 +60,7 @@ fn({ fruit: "apple" }); // "apple"
 * [x] *
 * [x] /
 * [x] %
+
+## Additional tools
+
+https://github.com/darky/json-logic-js-jit-tools
