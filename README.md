@@ -2,7 +2,9 @@
 
 Another implementation of [JsonLogic](https://jsonlogic.com), which precompile JSON rules for high speed performance.
 
-## Example
+## Examples
+
+#### Basic
 
 ```js
 import { compile } from 'json-logic-js-jit';
@@ -15,7 +17,31 @@ const fn = compile({ "and" : [
 fn(); // true
 ```
 
-## Supported operators
+#### Add operation
+
+```js
+import { compile, addOperation } from 'json-logic-js-jit';
+
+addOperation("plus", (a, b) => a + b);
+
+const fn = compile({ plus: [1, 2] });
+
+fn(); // 3
+```
+
+#### Pass data 
+
+```js
+import { compile, addOperation } from 'json-logic-js-jit';
+
+addOperation("var", (key, data) => data[key]);
+
+const fn = compile({ var: ["fruit"] });
+
+fn({ fruit: "apple" }); // "apple"
+```
+
+## Built-in operators
 
 * [x] and
 * [x] or
