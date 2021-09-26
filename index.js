@@ -7,7 +7,7 @@ export const compile = (rule) => {
   mapObj(
     rule,
     (key, val) => {
-      if (key === "and" || key === "or" || key === ">" || key === "<") {
+      if (operatorToRuntime[key]) {
         let nextStep = step;
         const arity = calcOperatorArity(key, val);
         bytecode = bytecode.replace(
@@ -21,7 +21,7 @@ export const compile = (rule) => {
                     : JSON.stringify(val[idx])
                 })`
             )
-            .join(` ${operatorMap[key]} `)
+            .join(` ${operatorToRuntime[key]} `)
         );
       }
 
@@ -40,18 +40,45 @@ const isObject = (value) => {
   return value != null && typeof value === "object";
 };
 
-const operatorMap = {
+const operatorToRuntime = {
   or: "||",
   and: "&&",
   ">": ">",
   "<": "<",
+  ">=": ">=",
+  "<=": "<=",
+  "==": "==",
+  "===": "===",
+  "!=": "!=",
+  "!==": "!==",
+  "+": "+",
+  "-": "-",
+  "*": "*",
+  "/": "/",
+};
+
+const operatorArity = {
+  or: 0,
+  and: 0,
+  "+": 0,
+  "-": 0,
+  "*": 0,
+  "/": 0,
+  ">": 2,
+  "<": 2,
+  ">=": 2,
+  "<=": 2,
+  "==": 2,
+  "===": 2,
+  "!=": 2,
+  "!==": 2,
 };
 
 const calcOperatorArity = (operator = "", value = []) => {
-  if (operator === ">" || operator === "<") {
-    return 2;
+  if (operatorArity[operator] > 0) {
+    return operatorArity[operator];
   }
-  if (operator === "and" || operator === "or") {
+  if (operatorArity[operator] === 0) {
     return value.length;
   }
 };
