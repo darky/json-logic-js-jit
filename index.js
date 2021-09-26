@@ -10,7 +10,7 @@ export const compile = (rule) => {
       if (operatorToRuntime[op]) {
         let nextStep = step;
         const arity = calcOperatorArity(op, val);
-        const bc = [...Array(arity).keys()]
+        const bytecodePart = [...Array(arity).keys()]
           .map(
             (idx) =>
               `(${
@@ -22,7 +22,7 @@ export const compile = (rule) => {
           .join(` ${operatorToRuntime[op]} `);
         bytecode = bytecode.replace(
           `__${step}__`,
-          arity === 1 ? `${operatorToRuntime[op]}${bc}` : bc
+          arity === 1 ? `${operatorToRuntime[op]}${bytecodePart}` : bytecodePart
         );
       }
 
@@ -56,6 +56,7 @@ const operatorToRuntime = {
   "-": "-",
   "*": "*",
   "/": "/",
+  "%": "%",
   "!": "!",
   "!!": "!!",
 };
@@ -69,6 +70,7 @@ const operatorArity = {
   "/": 0,
   "!": 1,
   "!!": 1,
+  "%": 2,
   ">": 2,
   "<": 2,
   ">=": 2,

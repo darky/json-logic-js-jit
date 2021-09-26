@@ -83,6 +83,11 @@ test("/", () => {
   equal(fn.bytecode, "(2) / (1) / (2)");
 });
 
+test("%", () => {
+  const fn = compile({ "%": [2, 2] });
+  equal(fn.bytecode, "(2) % (2)");
+});
+
 test("complex arithmetic", () => {
   const fn = compile({ "+": [{ "/": [2, 1, 2] }, { "*": [1, 2] }] });
   equal(fn.bytecode, "((2) / (1) / (2)) + ((1) * (2))");
