@@ -6,27 +6,28 @@ export const compile = (rule) => {
 
   mapObj(
     rule,
-    (key, val) => {
-      if (operatorToRuntime[key]) {
+    (op, val) => {
+      if (operatorToRuntime[op]) {
         let nextStep = step;
-        const arity = calcOperatorArity(key, val);
+        const arity = calcOperatorArity(op, val);
+        const bc = [...Array(arity).keys()]
+          .map(
+            (idx) =>
+              `(${
+                isObject(val[idx])
+                  ? `__${++nextStep}__`
+                  : JSON.stringify(val[idx])
+              })`
+          )
+          .join(` ${operatorToRuntime[op]} `);
         bytecode = bytecode.replace(
           `__${step}__`,
-          [...Array(arity).keys()]
-            .map(
-              (idx) =>
-                `(${
-                  isObject(val[idx])
-                    ? `__${++nextStep}__`
-                    : JSON.stringify(val[idx])
-                })`
-            )
-            .join(` ${operatorToRuntime[key]} `)
+          arity === 1 ? `${operatorToRuntime[op]}${bc}` : bc
         );
       }
 
       step += 1;
-      return [key, val];
+      return [op, val];
     },
     { deep: true }
   );
@@ -55,6 +56,8 @@ const operatorToRuntime = {
   "-": "-",
   "*": "*",
   "/": "/",
+  "!": "!",
+  "!!": "!!",
 };
 
 const operatorArity = {
@@ -64,6 +67,8 @@ const operatorArity = {
   "-": 0,
   "*": 0,
   "/": 0,
+  "!": 1,
+  "!!": 1,
   ">": 2,
   "<": 2,
   ">=": 2,

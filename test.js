@@ -53,6 +53,16 @@ test("!==", () => {
   equal(fn.bytecode, "(2) !== (1)");
 });
 
+test("!", () => {
+  const fn = compile({ "!": [false] });
+  equal(fn.bytecode, "!(false)");
+});
+
+test("!!", () => {
+  const fn = compile({ "!!": [1] });
+  equal(fn.bytecode, "!!(1)");
+});
+
 test("+", () => {
   const fn = compile({ "+": [2, 1, 2] });
   equal(fn.bytecode, "(2) + (1) + (2)");
